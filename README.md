@@ -1,10 +1,20 @@
 # ubuntu-activedirectory
-Collection of shell scripts to help ease configuration of active directory integration in linux.
+Collection of shell scripts to help ease configuration of active directory integration in linux. Mostly for my notes, but might be helpful for other folks too.
 
+# Scripts
+
+I'm lazy and sudo -s before running these two bash scripts. Also, you'll probably want to chmod 667 them to run them.
+
+ad-setupprereq.sh executes the necessary updates and adds the various modules (samba, sssd, etc) via apt.
+
+joinadrealm.sh is a way for me to just show the commands, in the order, and the various configuration files that must be modified/updated. Please study and understand what happens before you just run these on a production system of any kind. They are essentially my notes as I understand them from sssd man pages, and several blog sites and help sites I found. 
+
+# Schema Extension
 In order to use SUDO roles in Active Directory, you need to extend the schema. Please reference https://github.com/lbt/sudo/blob/master/doc/schema.ActiveDirectory with a simplified documenation on how to extend for the SUDO object type.
 
 Askubuntu has a reasonable answer on this process as well: http://askubuntu.com/questions/63782/add-ad-domain-user-to-sudoers-from-the-command-line. I've highlighted the relevant portion here:
 
+# Line by line - Schema Extension
 Grab the latest release of sudo, get the doc/schema.ActiveDirectory file, then import it (make sure to modify the domain path according to your domain name):
 
 ldifde -i -f schema.ActiveDirectory -c "CN=Schema,CN=Configuration,DC=X" "CN=Schema,CN=Configuration,DC=ad,DC=foobar,DC=com" -j .
